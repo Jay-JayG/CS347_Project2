@@ -2,7 +2,8 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
-# define BUFFER_SIZE 2048
+#include <ctype.h>
+#define BUFFER_SIZE 2048
 
 int main(int argc, char *argv[]) {
 
@@ -15,6 +16,9 @@ int main(int argc, char *argv[]) {
             count = read(0, buf, BUFFER_SIZE);
             if (count == 0) {
                 return 0;
+            }
+            for (int i = 0; i < count; i++) {
+                buf[i] = toupper(buf[i]);
             }
             write(1, buf, count);
         }
@@ -32,6 +36,9 @@ int main(int argc, char *argv[]) {
                 if (count == 0) {
                     close(df);
                     break;
+                }
+                for (int i = 0; i < count; i++) {
+                    buf[i] = toupper(buf[i]);
                 }
                 write(1, buf, count);
             }

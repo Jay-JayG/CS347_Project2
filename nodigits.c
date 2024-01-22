@@ -2,11 +2,13 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 # define BUFFER_SIZE 2048
 
 int main(int argc, char *argv[]) {
 
     char buf[BUFFER_SIZE];
+    char bufout[BUFFER_SIZE];
     int count;
     int df;
 
@@ -16,7 +18,13 @@ int main(int argc, char *argv[]) {
             if (count == 0) {
                 return 0;
             }
-            write(1, buf, count);
+            for (int i = 0, x = 0; i < count; i++) {
+                if (!isdigit(buf[i])) {
+                    bufout[x] = buf[i];
+                    x++;
+                }
+            }
+            write(1, bufout, strlen(bufout));
         }
     }
     
@@ -33,7 +41,13 @@ int main(int argc, char *argv[]) {
                     close(df);
                     break;
                 }
-                write(1, buf, count);
+                for (int i = 0, x = 0; i < count; i++) {
+                    if (!isdigit(buf[i])) {
+                        bufout[x] = buf[i];
+                        x++;
+                    }
+                }
+                write(1, bufout, strlen(bufout));
             }
         }
     }
